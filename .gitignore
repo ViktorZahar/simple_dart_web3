@@ -1,0 +1,13 @@
+.DS_Store
+.pub/*
+.dart_tool/*
+.idea/*
+packages/*
+build/*
+web/packages/*
+web/simple_ts_web3.js
+.packages
+*.lock
+
+simple_ts_web3/dist/*
+simple_ts_web3/node_modules/*
