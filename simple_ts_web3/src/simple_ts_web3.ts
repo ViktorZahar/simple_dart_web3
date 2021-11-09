@@ -1,4 +1,4 @@
-import { Interface } from '@ethersproject/abi'
+import { Interface } from '@ethersproject/abi';
 import Web3 from "web3";
 
 interface Call {

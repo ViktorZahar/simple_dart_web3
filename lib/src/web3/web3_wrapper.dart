@@ -83,18 +83,19 @@ class Web3Wrapper {
       }
     } catch (e) {
       print(e.toString());
-      if (debug) {
-        // for (final call in calls) {
-        //   try {
-        //     callResult = await promiseToFuture(
-        //         _web3wrapperRaw.multicall([jsify(call.toJson())]));
-        //   } catch (e) {
-        //     print('bad call ${call.address}.${call.name} ${call.params}');
-        //     rethrow;
-        //   }
-        // }
-        // throw Exception('too big batch size $batchSize');
-      }
+      // if (debug) {
+      //   for (final call in calls) {
+      //     try {
+      //       final callResult = await promiseToFuture(
+      //           _web3wrapperRaw.multicall([jsify(call.toJson())]));
+      //     } catch (e) {
+      //       print('bad call ${call.address}.${call.name} ${call.params}');
+      //       rethrow;
+      //     }
+      //   }
+      //   throw Exception('too big batch size $batchSize');
+      // }
+      throw Exception('execution multicall error ($netId): ${e.toString()}');
     }
     if (callResult is List) {
       return callResult;

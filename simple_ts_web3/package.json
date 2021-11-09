@@ -8,9 +8,8 @@
     "/dist"
   ],
   "dependencies": {
-    "web3": "1.3.6",
-    "@ethersproject/abi": "^5.0.7"
-    
+    "@ethersproject/abi": "^5.0.7",
+    "web3": "1.3.6"
   },
   "devDependencies": {
     "ts-loader": "^8.1.0",

@@ -11,3 +11,4 @@ web/simple_ts_web3.js
 
 simple_ts_web3/dist/*
 simple_ts_web3/node_modules/*
+/simple_ts_web3/package-lock.json
