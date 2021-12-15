@@ -10,7 +10,8 @@ Future<void> main() async {
   final web3Wrapper = Web3Wrapper(
       52,
       '0x949f41e8a6197f2a19854f813fd361bab9aa7d2d',
-      'https://bsc-dataseed1.binance.org:443');
+      'https://bsc-dataseed1.binance.org:443',
+      'binance-smart-chain');
   final res = await web3Wrapper.getBalances(addresses);
   final body = querySelector('body');
   if (body != null) {

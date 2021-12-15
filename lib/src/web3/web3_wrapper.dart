@@ -48,7 +48,7 @@ class Web3WrapperRaw {
 }
 
 class Web3Wrapper {
-  Web3Wrapper(this.netId, this.multiCallAddress, this.rcpAddress) {
+  Web3Wrapper(this.netId, this.multiCallAddress, this.rcpAddress, this.name) {
     _web3wrapperRaw = Web3WrapperRaw(netId, multiCallAddress, rcpAddress);
   }
 
@@ -58,6 +58,7 @@ class Web3Wrapper {
   late int netId;
   late String multiCallAddress;
   late String rcpAddress;
+  late String name;
 
   Future<List<dynamic>> multicall(List<Call> calls,
       {batchSize = 700, maxThreads = 8}) async {
@@ -83,18 +84,18 @@ class Web3Wrapper {
       }
     } catch (e) {
       print(e.toString());
-      // if (debug) {
-      //   for (final call in calls) {
-      //     try {
-      //       final callResult = await promiseToFuture(
-      //           _web3wrapperRaw.multicall([jsify(call.toJson())]));
-      //     } catch (e) {
-      //       print('bad call ${call.address}.${call.name} ${call.params}');
-      //       rethrow;
-      //     }
-      //   }
-      //   throw Exception('too big batch size $batchSize');
-      // }
+      if (debug) {
+        for (final call in calls) {
+          try {
+            await promiseToFuture(
+                _web3wrapperRaw.multicall([jsify(call.toJson())]));
+          } catch (e) {
+            print('bad call ${call.address}.${call.name} ${call.params}');
+            rethrow;
+          }
+        }
+        throw Exception('too big batch size $batchSize');
+      }
       throw Exception('execution multicall error ($netId): ${e.toString()}');
     }
     if (callResult is List) {
@@ -160,6 +161,18 @@ class Web3Wrapper {
         .toList();
     final res = await multicall(calls);
     return res.map((e) => BigInt.parse(e[0].toString())).toList();
+  }
+
+  Future<List<int>> getDecimals(List<String> addresses) async {
+    final calls = addresses
+        .map((address) => Call()
+          ..address = address
+          ..name = 'decimals'
+          ..params = []
+          ..abi = multiCallGetEthDecimals)
+        .toList();
+    final res = await multicall(calls);
+    return res.map((e) => int.parse(e[0].toString())).toList();
   }
 }
 
